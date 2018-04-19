@@ -23,7 +23,8 @@ func process(str string) bool {
 
 func main() {
 	var str string
-	fmt.Scanf("%sd", &str)
+	fmt.Scanf("%s 啥玩意", &str)
+	fmt.Println(str)
 	if process(str) {
 		fmt.Println("yes")
 	} else {

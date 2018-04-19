@@ -76,8 +76,7 @@ func addNode(p *Student, newNode *Student) {
 }
 
 func main() {
-	var head *Student = new(Student)
-
+	var head *Student = new(Student) //等价于var head *Student = &Student{}
 	head.Name = "hua"
 	head.Age = 18
 	head.Score = 100

@@ -36,7 +36,8 @@ func (people People) Print() {
 func (p People) Sleep() {
 	fmt.Println("people sleep")
 }
-
+//Interface类型可以定义一组方法，但是这些不需要实现。并且interface不能
+//包含任何变量。
 func main() {
 
 	var t Test

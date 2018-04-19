@@ -9,7 +9,8 @@ type Student struct {
 }
 
 type Stu Student //alias
-
+//make 用来创建map、slice、channel
+//new用来创建值类型 用户自定义的结构体类型也是值类型
 func main() {
 
 	var i integer = 1000

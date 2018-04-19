@@ -28,17 +28,17 @@ func test(n int)  {
 }
 
 func main() {
-	//var n int
-	//fmt.Scanf("%d", &n)
-	//process(n)
+	var n int
+	fmt.Scanf("%d", &n)
+	process(n)
 	//var a = make([]int, 3,4)
 	//fmt.Printf("%p\n",&a)
 	//fmt.Println(a)
 	//fmt.Println(cap(a))
 	//fmt.Println(len(a))
-	//a= append(a,1,2,3,4,5,5,5,5,5,6,7,8)
+	//a= append(a,1,2,3,4,5,5,5,5,5,6,7,8,1,1)
 	//fmt.Println(cap(a))
 	//fmt.Println(len(a))
 	//fmt.Printf("%p\n",&a)
-	test(3)
+	//test(3)
 }
