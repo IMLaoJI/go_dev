@@ -28,17 +28,30 @@ func test(n int)  {
 }
 
 func main() {
-	var n int
-	fmt.Scanf("%d", &n)
-	process(n)
+	//var n int
+	//fmt.Scanf("%d", &n)
+	//process(n)
 	//var a = make([]int, 3,4)
 	//fmt.Printf("%p\n",&a)
 	//fmt.Println(a)
 	//fmt.Println(cap(a))
 	//fmt.Println(len(a))
-	//a= append(a,1,2,3,4,5,5,5,5,5,6,7,8,1,1)
-	//fmt.Println(cap(a))
-	//fmt.Println(len(a))
-	//fmt.Printf("%p\n",&a)
+	//newa := append(a,1,2,3,4,5,4)
+	//fmt.Println(cap(newa))
+	//fmt.Println(len(newa))
+	//fmt.Printf("%p\n",&newa)
 	//test(3)
+	slice := []int{10, 20, 30, 40}
+	fmt.Printf("%p\n",&slice)
+	fmt.Println(cap(slice))
+	fmt.Println(len(slice))
+	slice111 := []int{10, 20, 30, 40}
+	newSlice := append(slice, slice111...)
+	fmt.Println(cap(newSlice))
+	fmt.Println(len(newSlice))
+	//fmt.Printf("%p\n",&newSlice)
+	//newSlice1 := append(newSlice, 50)
+	//fmt.Printf("%p\n",&newSlice1)
+	//fmt.Println(cap(newSlice1))
+	//fmt.Println(len(newSlice1))
 }

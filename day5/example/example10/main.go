@@ -8,7 +8,7 @@ type People struct {
 }
 
 type Test interface {
-	Print()
+	Print(string)string
 	Sleep()
 }
 
@@ -18,13 +18,14 @@ type Student struct {
 	score int
 }
 
-func (p Student) Print() {
+func (p *Student) Print(string string)string {
 	fmt.Println("name:", p.name)
 	fmt.Println("age:", p.age)
 	fmt.Println("score:", p.score)
+	return ""
 }
 
-func (p Student) Sleep() {
+func (p *Student) Sleep() {
 	fmt.Println("student sleep")
 }
 
@@ -50,18 +51,18 @@ func main() {
 		score: 200,
 	}
 
-	t = stu
-	t.Print()
+	t = &stu
+	t.Print("ss")
 	t.Sleep()
 
-	var people People = People{
-		name: "people",
-		age:  100,
-	}
-
-	t = people
-	t.Print()
-	t.Sleep()
-
-	fmt.Println("t:", t)
+	//var people People = People{
+	//	name: "people",
+	//	age:  100,
+	//}
+	//
+	//t = people
+	//t.Print()
+	//t.Sleep()
+	//
+	//fmt.Println("t:", t)
 }
