@@ -34,15 +34,17 @@ func test2() {
 }
 
 func main() {
-	first := 100
-	second := 200
-	//swap(&first, &second)
-	//first, second = swap1(first, second)
-	first, second = second, first
-	fmt.Println("first=", first)
-	fmt.Println("second=", second)
-
-	test()
-
-	test2()
+	//first := 100
+	//second := 200
+	////swap(&first, &second)
+	////first, second = swap1(first, second)
+	//first, second = second, first
+	//fmt.Println("first=", first)
+	//fmt.Println("second=", second)
+	//
+	//test()
+	//
+	//test2()
+	InitUserMgr()
+	fmt.Println(mgr)
 }

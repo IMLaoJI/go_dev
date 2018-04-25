@@ -31,17 +31,20 @@ func (t *Train) Set(age int) {
 }
 
 func main() {
-	var train Train
-	train.int = 300
-	train.Car.Set("huas", 100)
-
-	train.Car.Name = "test"
-	fmt.Println(train)
-	a :="SSS"
-	//array2 := [3]*string{} //等价于array2 :=new([3]*string)
-	array2 := [3]*string{new(string), new(string), new(string)}
-	fmt.Println(array2)
-	array3 := new([3]*string)
-	array3[0] = &a
-	fmt.Println(*array3[0])
+	//var train Train
+	//train.int = 300
+	//train.Car.Set("huas", 100)
+	//
+	//train.Car.Name = "test"
+	//fmt.Println(train)
+	//a :="SSS"
+	////array2 := [3]*string{} //等价于array2 :=new([3]*string)
+	//array2 := [3]*string{new(string), new(string), new(string)}
+	//fmt.Println(array2)
+	//array3 := new([3]*string)
+	//array3[0] = &a
+	//fmt.Println(*array3[0])
+	var  b [4]byte
+	fmt.Println(b)
+	//fmt.Println(b[:])
 }
