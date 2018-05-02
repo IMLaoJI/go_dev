@@ -1,0 +1,26 @@
+a = 1;
+b = a + 1 - (2 + 2);
+
+if a > 0 {
+    c = 3;
+} elif a < 0 {
+    c = 5;
+} else {
+    c = 10;
+}
+
+for i = 1; i < 10 ; i = i +1 {
+    print(i);
+}
+
+func funck(a, b, c) {
+    q = 1;
+}
+
+func foo() {
+    w= 2;
+}
+
+a, b, c = 1, 2,3;
+
+print(a);
