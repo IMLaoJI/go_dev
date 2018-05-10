@@ -14,12 +14,8 @@ type CharCount struct {
 	OtherCount int
 }
 
-func number(ch rune, int int)  {
-	
-}
-
 func main() {
-	file, err := os.Open(`H:\Go\Development\src\go_dev\wordAnalysis\te1st.txt`)
+	file, err := os.Open("C:/test.log")
 	if err != nil {
 		fmt.Println("read file err:", err)
 		return
@@ -57,5 +53,8 @@ func main() {
 
 	}
 
-
+	fmt.Printf("char count:%d\n", count.ChCount)
+	fmt.Printf("num count:%d\n", count.NumCount)
+	fmt.Printf("space count:%d\n", count.SpaceCount)
+	fmt.Printf("other count:%d\n", count.OtherCount)
 }
