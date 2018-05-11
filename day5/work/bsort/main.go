@@ -2,6 +2,9 @@ package main
 
 import "fmt"
 
+/*
+BubbleSort
+ */
 func bsort(a []int) {
 
 	for i := 0; i < len(a); i++ {

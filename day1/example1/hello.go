@@ -78,7 +78,15 @@ func main() {
 	//s2 := append(s, 'b')
 	//fmt.Printf("%p\n",s2)
 	//fmt.Println(string(s1), ",", string(s2))
+
+	var i int = 104
+	var j int = 84
+	fmt.Println(string(rune(i)))
+	fmt.Println(string(rune(j)))
 	str1 := "abca"
+	var  a rune = 'a'
+	var n rune = 'E'
+	fmt.Println(n,"sss")
 	str1 += "123"
 	index := strings.Index(str1, "a")
 	tem := []rune(str1)
@@ -88,9 +96,18 @@ func main() {
 		}
 
 	}
+	fmt.Println(a==n)
+	fmt.Println(len(str1))
 	s := string(tem)
 	//contains := strings.Contains(str1, "b")
 	fmt.Println(str1)
 	fmt.Println(index)
 	fmt.Println(s)
+	ab := []int{1,2,3,4,5}
+	test(ab)
+	fmt.Println(ab)
+}
+
+func test(test []int)  {
+	test[1] =0
 }

@@ -11,7 +11,7 @@ import (
 var sum int
 var NODE, ENODE string
 
-var n [8]Edge = [8]Edge{}
+var n []Edge
 
 func initWF() {
 	fmt.Print("请输入上下文无关文法的总规则数：")
@@ -24,11 +24,20 @@ func initWF() {
 		fmt.Println("输入的不是数字哦")
 		return
 	}
+	n = make([]Edge,sum)
 	fmt.Println("请输入具体规则（格式：左部 右部，@为空）：")
 	for j := 0; j < numRule; j++ {
 		WF, _ := inputReader.ReadString('\n')
 		WF = strings.Trim(WF, " \n")
 		split := strings.Split(WF, " ")
+		//n[j] = Edge{
+		//	left:     "",
+		//	right:    "",
+		//	rlen:     0,
+		//	first:    "",
+		//	follow:   "",
+		//	myselect: "",
+		//}
 		n[j].left = split[0]
 		n[j].right = split[1]
 		n[j].rlen = len(n[j].right)
@@ -53,22 +62,186 @@ func main() {
 	//输出文法的first集和follow集 并且判断是否为LL文法
 	drawone(flag)
 	//输出预测分析表
-	drawtwo()
-	fmt.Println(ENODE)
-	fmt.Println(NODE)
+	yc := drawtwo()
+	//处理分析串
+	dealAnalysis(yc)
 
 }
-func drawtwo() {
+func dealAnalysis(yc [][]string) {
+	var chuan, fenxi, fchuan string
+	inputReader := bufio.NewReader(os.Stdin)
+	for ; ; {
+		fmt.Print("\n请输入符号串：")
+		chuan, _ = inputReader.ReadString('\n')
+		chuan = strings.Trim(chuan, " \n")
+		temp := []rune(chuan)
+		if len(temp) == 0 {
+			fmt.Print("输入错误!!!")
+			continue
+		} else {
+			break
+		}
+	}
+	fchuan = chuan
+	fenxi = "#"
+	fenxi += string(NODE[0])
+	var i int = 0
+	fmt.Println("预测分析过程如下：")
+	fmt.Print("步骤")
+	drawFH(7, " ")
+	fmt.Print("分析栈")
+	drawFH(10, " ")
+	fmt.Print("剩余输入串")
+	drawFH(8, " ")
+	fmt.Print("推导所用产生式或匹配")
+	if match(&chuan, &fenxi, yc, &i) == 1 {
+		fmt.Print("\n输入串", fchuan, "是该文法的句子\n")
+	} else {
+		fmt.Print("\n输入串", fchuan, "不是该文法的句子\n")
+	}
+}
+func match(chuan, fenxi *string, yc [][]string, b *int) int {
+	var ch, a rune
+	var x, i, j, k int
+	chu := []rune(*chuan)
+	fen := []rune(*fenxi)
+	*b++
+	fmt.Print("\n", " ", *b)
+	if *b > 9 {
+		drawFH(8, " ")
+	} else {
+		drawFH(9, " ")
+	}
+	fmt.Print(*fenxi)
+	drawFH(26-len(*chuan)-len(*fenxi), " ");
+	fmt.Print(*chuan)
+	drawFH(10, " ")
+	a = chu[0]
+	ch = fen[len(fen)-1]
+	x = strings.Index(ENODE, string(ch))
+	if x < len(ENODE) && x > -1 {
+		if ch == a {
+			fen = erase(fen, len(fen)-1)
+			*fenxi = string(fen)
+			chu = erase(chu, 0)
+			*chuan = string(chu)
+			fmt.Print("'", string(a), "'匹配")
+			if match(chuan, fenxi, yc, b) == 1 {
+				return 1
+			} else {
+				return 0
+			}
+		}
+		return 0
+	} else {
+		if string(ch) == "#" {
+			if ch == a {
+				fmt.Println("分析成功")
+				return 1
+			} else {
+				return 0
+			}
+		} else {
+			if string(ch) == "@" {
+				fen = erase(fen, len(fen)-1)
+				*fenxi = string(fen)
+				if match(chuan, fenxi, yc, b) == 1 {
+					return 1
+				} else {
+					return 0
+				}
+			} else {
+				i = strings.Index(NODE, string(ch))
+				if string(a) == "#" {
+					x = strings.Index(ENODE, "@")
+					if x < len(ENODE) && x > -1 {
+						j = len(ENODE) - 1
+					} else {
+						j = len(ENODE)
+					}
+				} else {
+					j = strings.Index(ENODE, string(a))
+				}
+				yctem := []rune(yc[i][j])
+				if len(yctem) > 0 {
+					fmt.Print(string(NODE[i]), "->", yc[i][j])
+					fen = erase(fen, len(fen)-1)
+					*fenxi = string(fen)
+					for k = len(yc[i][j]) - 1; k > -1; k-- {
+						if string(yc[i][j][k]) != "@" {
+							*fenxi += string(yc[i][j][k])
+						}
+					}
+					if match(chuan, fenxi, yc, b) == 1 {
+						return 1
+					} else {
+						return 0
+					}
+				} else {
+					return 0
+				}
+			}
+		}
+	}
+
+}
+func erase(tem []rune, index int) []rune {
+	tem = append(tem[:index], tem[index+1:len(tem)]...)
+	return tem
+}
+func drawtwo() [][]string {
+	var LOOP_COUNT = len(NODE)
+	var LOOP_NUM = 50
 	fmt.Println("\n\n预测分析表如下")
-	yc := [len(NODE)][50]string{}
+	//var tem  =len(NODE)
+	var yc [][]string
+	for i := 0; i < LOOP_COUNT; i++ {
+		sl := make([]string, 0, LOOP_NUM)
+		for j := 0; j < LOOP_NUM; j++ {
+			sl = append(sl, "")
+		}
+		yc = append(yc, sl)
+	}
 	var i, j, k int
-	var flag bool
+	var flag int
 	for i = 0; i < len(ENODE); i++ {
 		if string(ENODE[i]) != "@" {
-			drawFH(10," ")
+			drawFH(10, " ")
 			fmt.Print(string(ENODE[i]))
 		}
 	}
+	drawFH(10, " ")
+	fmt.Println("#")
+	var x int
+	for i = 0; i < len(NODE); i++ {
+		drawFH(4, " ")
+		fmt.Print(string(NODE[i]))
+		drawFH(5, " ")
+		for k = 0; k < len(ENODE); k++ {
+			flag = 1
+			for j = 0; j < sum; j++ {
+				if NODE[i] == n[j].getlf()[0] {
+					x = strings.Index(n[j].getselect(), string(ENODE[k]))
+					if x < len(n[j].getselect()) && x > -1 {
+						fmt.Print("->", n[j].getrg())
+						yc[i][k] = n[j].getrg()
+						drawFH(9-n[j].getrlen(), " ")
+						flag = 0
+					}
+					x = strings.Index(n[j].getselect(), "#")
+					if (k == len(ENODE)-1 && x < len(n[j].getselect()) && x > -1) {
+						fmt.Print("->", n[j].getrg())
+						yc[i][j] = n[j].getrg()
+					}
+				}
+			}
+			if flag == 1 && string(ENODE[k]) != "@" {
+				drawFH(11, " ")
+			}
+		}
+		fmt.Println()
+	}
+	return yc
 
 }
 func drawone(flag int) {
@@ -127,7 +300,7 @@ func dealfollow() {
 			if n[i].getlf() == n[0].getlf() {
 				n[i].newfollow("#")
 			}
-			follow(&n[i], &n, i)
+			follow(&n[i], n, i)
 		}
 		for i = 0; i < sum; i++ {
 			for j = 0; j < sum; j++ {
@@ -138,7 +311,7 @@ func dealfollow() {
 		}
 	}
 }
-func follow(e *Edge, n *[8]Edge, x int) {
+func follow(e *Edge, n []Edge, x int) {
 	var i, j, k, s int
 	var str string
 	for i = 0; i < e.getrlen(); i++ {
@@ -172,7 +345,7 @@ func dealselect() int {
 	var str string
 	var flag int
 	for i = 0; i < sum; i++ {
-		myselect(&n[i], &n)
+		myselect(&n[i], n)
 	}
 	for i = 0; i < len(NODE); i++ {
 		str = ""
@@ -193,7 +366,7 @@ func dealselect() int {
 	}
 	return flag
 }
-func myselect(e *Edge, n *[8]Edge) {
+func myselect(e *Edge, n []Edge) {
 	var i, j int
 	if strings.Contains(ENODE, e.getro()) {
 		e.newselect(e.getro())
@@ -213,8 +386,7 @@ func myselect(e *Edge, n *[8]Edge) {
 		}
 	}
 }
-
-func first(e *Edge, n *[8]Edge, x int) {
+func first(e *Edge, n []Edge, x int) {
 	var i, j int
 	for j = 0; j < sum; j++ {
 		if e.getlf() == n[j].getlf() {
@@ -233,7 +405,7 @@ func first(e *Edge, n *[8]Edge, x int) {
 func dealFirst() {
 	var i, j, k int
 	for i = 0; i < sum; i++ {
-		first(&n[i], &n, i)
+		first(&n[i], n, i)
 	}
 	for i = 0; i < sum; i++ {
 		if strings.Contains(n[i].getfirst(), "@") {
