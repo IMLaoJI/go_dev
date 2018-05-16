@@ -106,6 +106,9 @@ func main() {
 	ab := []int{1,2,3,4,5}
 	test(ab)
 	fmt.Println(ab)
+	aa :="a"
+	fmt.Println(int(aa[0]))
+
 }
 
 func test(test []int)  {
