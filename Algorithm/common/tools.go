@@ -40,8 +40,12 @@ func ReadInput() (arr []int) {
 	return
 }
 
-//奇技淫巧 通过异或来实现两个数交换数值
+//奇技淫巧 通过异或来实现两个数交换数值 注意 两值如果相等 会导致出现0
 func Swap(arr []int, i int, j int) {
+
+	if i == j {
+		return
+	}
 	arr[i] = arr[i] ^ arr[j]
 	arr[j] = arr[i] ^ arr[j]
 	arr[i] = arr[i] ^ arr[j]

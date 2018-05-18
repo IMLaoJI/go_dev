@@ -1,4 +1,4 @@
-package main
+package Sort
 
 import "go_dev/Algorithm/common"
 import "math"

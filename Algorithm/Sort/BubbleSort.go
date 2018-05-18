@@ -1,4 +1,4 @@
-package main
+package Sort
 
 import (
 	"bufio"
